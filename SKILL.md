@@ -1,5 +1,5 @@
 ---
-name: burpsuite-extension-dev
+name: burpsuite-extension-skill
 description: Helps develop Burp Suite extensions in Java (Montoya API) or Python (Jython). Use when creating new extensions, implementing HTTP listeners, custom scanner checks, intruder payloads, or any Burp Suite extension development task.
 version: 1.0.0
 license: MIT
