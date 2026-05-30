@@ -17,7 +17,7 @@ A comprehensive skill for developing Burp Suite extensions in Java (Montoya API)
 ### Install the Skill
 
 ```bash
-npx skills add gandli/burpsuite-extension-dev
+npx skills add gandli/burpsuite-extension-skill
 ```
 
 ### Create a New Project
