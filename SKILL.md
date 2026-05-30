@@ -1,6 +1,6 @@
 ---
 name: burpsuite-extension-skill
-description: Helps develop Burp Suite extensions in Java (Montoya API) or Python (Jython). Use when creating new extensions, implementing HTTP listeners, custom scanner checks, intruder payloads, or any Burp Suite extension development task.
+description: Develop Burp Suite extensions in Java (Montoya API) or Python (Jython). Supports creating HTTP listeners, scanner checks, intruder payloads, UI tabs, and context menus. Includes project templates, multi-platform setup guides, and best practices.
 version: 1.0.0
 license: MIT
 tags:
@@ -11,40 +11,45 @@ tags:
   - python
   - jython
   - penetration-testing
+  - web-security
 allowed-tools: Bash Read Write Edit
 ---
 
-# Burp Suite Extension Development
+# Burp Suite Extension Development Skill
 
 Develop Burp Suite extensions in **Java** (Montoya API) or **Python** (Jython).
 
-## Official Documentation
+## Quick Start
 
-- [Creating Extensions](https://portswigger.net/burp/documentation/desktop/extend-burp/extensions/creating)
-- [Starter Project (Java)](https://portswigger.net/burp/documentation/desktop/extend-burp/extensions/creating/set-up/starter-project)
-- [First Extension Guide](https://portswigger.net/burp/documentation/desktop/extend-burp/extensions/creating/first-extension)
-- [Montoya API JavaDoc](https://portswigger.github.io/burp-extensions-montoya-api/javadoc/burp/api/montoya/MontoyaApi.html)
-- [Montoya API GitHub](https://github.com/PortSwigger/burp-extensions-montoya-api)
-- [Example Extensions](https://github.com/PortSwigger/burp-extensions-montoya-api-examples)
-- [Legacy Extender API JavaDoc](https://portswigger.net/burp/extender/api/)
+### When to Use This Skill
 
-## When to Use
+Use this skill when you need to:
+- Create a new Burp Suite extension from scratch
+- Implement HTTP traffic interception or modification
+- Build custom vulnerability scanner checks
+- Generate custom intruder payloads
+- Add UI tabs or context menus to Burp Suite
 
-- Creating new Burp Suite extensions
-- Implementing HTTP traffic interceptors/modifiers
-- Creating custom scanner checks
-- Developing intruder payload generators
-- Adding custom UI tabs to Burp Suite
+### What This Skill Provides
+
+- **Project Templates**: Ready-to-use Java and Python templates
+- **Multi-Platform Setup**: macOS, Windows, and Linux guides
+- **Best Practices**: Error handling, performance, and security
+- **Official Resources**: Links to PortSwigger documentation
+
+---
 
 ## Choose Your Language
 
 | Feature | Java (Montoya API) | Python (Jython) |
 |---------|-------------------|-----------------|
-| API | Montoya API (New) | Extender API (Legacy) |
+| API Version | Montoya API (New) | Extender API (Legacy) |
 | Java Version | JDK 21+ | JDK 17+ |
 | Performance | Best | Slower |
 | Setup Complexity | Medium | Simple |
 | Best For | Production extensions | Quick scripts/prototypes |
+
+**Recommendation**: Use Java for production extensions. Use Python for rapid prototyping.
 
 ---
 
@@ -52,110 +57,45 @@ Develop Burp Suite extensions in **Java** (Montoya API) or **Python** (Jython).
 
 ### macOS
 
-#### Install Java (Homebrew)
 ```bash
-# Install Homebrew if not installed
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-
 # Install Java 21
 brew install openjdk@21
-
-# Add to PATH
 echo 'export PATH="/opt/homebrew/opt/openjdk@21/bin:$PATH"' >> ~/.zshrc
 source ~/.zshrc
 
-# Verify
+# Verify installation
 java -version
-```
 
-#### Install IntelliJ IDEA
-```bash
+# Install IntelliJ IDEA (optional)
 brew install --cask intellij-idea-ce
-```
-
-#### Install Jython (for Python development)
-```bash
-brew install jython
 ```
 
 ### Windows
 
-#### Install Java (PowerShell)
 ```powershell
-# Using winget (Windows Package Manager)
+# Install Java 21
 winget install EclipseAdoptium.Temurin.21.JDK
-
-# Or download from: https://adoptium.net/
 
 # Set environment variables
 $env:JAVA_HOME = "C:\Program Files\Eclipse Adoptium\jdk-21"
 $env:Path += ";$env:JAVA_HOME\bin"
 
-# Make permanent (run as Administrator)
-[System.Environment]::SetEnvironmentVariable("JAVA_HOME", "C:\Program Files\Eclipse Adoptium\jdk-21", "Machine")
-[System.Environment]::SetEnvironmentVariable("Path", $env:Path + ";$env:JAVA_HOME\bin", "Machine")
-
-# Verify
+# Verify installation
 java -version
-```
-
-#### Install IntelliJ IDEA
-```powershell
-winget install JetBrains.IntelliJIDEA.Community
-```
-
-#### Install Jython (for Python development)
-```powershell
-# Download Jython installer from: https://www.jython.org/download
-# Run installer and note the installation path
 ```
 
 ### Linux (Ubuntu/Debian)
 
-#### Install Java
 ```bash
-# Add Adoptium repository
-wget -qO - https://packages.adoptium.net/artifactory/api/gpg/key/public | sudo apt-key add -
-sudo add-apt-repository --yes https://packages.adoptium.net/artifactory/deb/
-sudo apt-get update
-
 # Install Java 21
+sudo apt-get update
 sudo apt-get install temurin-21-jdk
 
-# Verify
+# Verify installation
 java -version
-```
 
-#### Install IntelliJ IDEA
-```bash
-# Using Snap
+# Install IntelliJ IDEA (optional)
 sudo snap install intellij-idea-community --classic
-
-# Or using Flatpak
-flatpak install flathub com.jetbrains.IntelliJ-IDEA-Community
-```
-
-#### Install Jython
-```bash
-# Download Jython
-wget https://repo1.maven.org/maven2/org/python/jython-standalone/2.7.3/jython-standalone-2.7.3.jar
-
-# Make executable
-chmod +x jython-standalone-2.7.3.jar
-
-# Install
-java -jar jython-standalone-2.7.3.jar
-```
-
-### Linux (Fedora/RHEL)
-
-#### Install Java
-```bash
-# Install Java 21
-sudo dnf install java-21-openjdk-devel
-
-# Verify
-java -version
 ```
 
 ---
@@ -164,27 +104,37 @@ java -version
 
 ### Prerequisites
 
-1. **Burp Suite Professional or Community Edition** - [Download](https://portswigger.net/burp/communitydownload)
-2. **Java JDK 21+** - [Adoptium](https://adoptium.net/)
-3. **IntelliJ IDEA** (Recommended) - [Download](https://www.jetbrains.com/idea/)
+1. **Burp Suite** - [Download Community Edition](https://portswigger.net/burp/communitydownload)
+2. **Java JDK 21+** - [Download from Adoptium](https://adoptium.net/)
+3. **IntelliJ IDEA** (Optional) - [Download](https://www.jetbrains.com/idea/)
 
-### Quick Start: Using the Starter Project
+### Quick Start with Starter Project
 
 ```bash
-# Clone the starter project
+# Clone the official starter project
 git clone https://github.com/PortSwigger/burp-extensions-montoya-api-starter.git my-extension
 cd my-extension
 
-# Build with Gradle
+# Build
 ./gradlew build  # macOS/Linux
 gradlew.bat build  # Windows
 
 # Output: build/libs/my-extension.jar
 ```
 
-### Montoya API Key Interfaces
+### Load Extension in Burp Suite
+
+1. Open Burp Suite
+2. Go to **Extensions** → **Installed**
+3. Click **Add**
+4. Select **Java** as extension type
+5. Browse to `build/libs/my-extension.jar`
+6. Click **Next**
+
+### Key Interfaces
 
 #### Extension Entry Point
+
 ```java
 package burp.extension;
 
@@ -195,12 +145,13 @@ public class MyExtension implements BurpExtension {
     @Override
     public void initialize(MontoyaApi api) {
         api.extension().setName("My Extension");
-        api.logging().logToOutput("Extension loaded!");
+        api.logging().logToOutput("Extension loaded successfully!");
     }
 }
 ```
 
 #### HTTP Proxy Handler
+
 ```java
 import burp.api.montoya.proxy.http.InterceptedRequest;
 import burp.api.montoya.proxy.http.ProxyRequestHandler;
@@ -228,6 +179,7 @@ public class MyProxyHandler implements ProxyRequestHandler {
 ```
 
 #### Scanner Check
+
 ```java
 import burp.api.montoya.scanner.AuditResult;
 import burp.api.montoya.scanner.ScanCheck;
@@ -242,40 +194,15 @@ public class MyScanCheck implements ScanCheck {
     
     @Override
     public AuditResult passiveAudit(HttpRequestResponse baseRequestResponse) {
-        // Passive scan logic
+        // Implement passive scan logic
         return null;
     }
     
     @Override
     public AuditResult activeAudit(HttpRequestResponse baseRequestResponse, 
                                     AuditResult auditResult) {
-        // Active scan logic
+        // Implement active scan logic
         return null;
-    }
-}
-```
-
-#### UI Tab
-```java
-import burp.api.montoya.ui.swing.SwingComponent;
-import javax.swing.*;
-
-public class MyTab implements burp.api.montoya.ui.Tab {
-    private final JPanel panel;
-    
-    public MyTab() {
-        panel = new JPanel();
-        panel.add(new JLabel("My Extension Tab"));
-    }
-    
-    @Override
-    public String caption() {
-        return "My Extension";
-    }
-    
-    @Override
-    public SwingComponent uiComponent() {
-        return SwingComponent.swingComponent(panel);
     }
 }
 ```
@@ -288,22 +215,15 @@ public class MyExtension implements BurpExtension {
     public void initialize(MontoyaApi api) {
         api.extension().setName("My Extension");
         
-        // Register HTTP listener
+        // Register components
         api.proxy().registerRequestHandler(new MyProxyHandler(api));
-        
-        // Register scanner check
         api.scanner().registerScanCheck(new MyScanCheck(api));
-        
-        // Register UI tab
         api.userInterface().registerSuiteTab("My Extension", new MyTab());
-        
-        // Register context menu
-        api.userInterface().registerContextMenuItemsProvider(new MyContextMenu(api));
     }
 }
 ```
 
-### Project Structure (Gradle)
+### Project Structure
 
 ```
 my-extension/
@@ -345,30 +265,14 @@ tasks.named('jar') {
 }
 ```
 
-### Build & Load
-
-```bash
-# Build (macOS/Linux)
-./gradlew build
-
-# Build (Windows)
-gradlew.bat build
-
-# Load in Burp Suite:
-# 1. Extensions → Installed → Add
-# 2. Select Java
-# 3. Browse to build/libs/my-extension.jar
-# 4. Click Next
-```
-
 ---
 
 ## Path B: Python Development (Jython)
 
 ### Prerequisites
 
-1. **Burp Suite Professional or Community Edition** - [Download](https://portswigger.net/burp/communitydownload)
-2. **Jython Standalone JAR** - [Download](https://www.jython.org/download)
+1. **Burp Suite** - [Download Community Edition](https://portswigger.net/burp/communitydownload)
+2. **Jython** - [Download Standalone JAR](https://www.jython.org/download)
 
 ### Setup Jython in Burp Suite
 
@@ -382,7 +286,6 @@ gradlew.bat build
 # burp_extender.py
 from burp import IBurpExtender
 from burp import IHttpListener
-from burp import IScannerCheck
 from java.io import PrintWriter
 
 class BurpExtender(IBurpExtender):
@@ -392,7 +295,7 @@ class BurpExtender(IBurpExtender):
         
         callbacks.setExtensionName("My Python Extension")
         
-        # Output streams
+        # Setup output streams
         self._stdout = PrintWriter(callbacks.getStdout(), True)
         self._stderr = PrintWriter(callbacks.getStderr(), True)
         
@@ -400,9 +303,6 @@ class BurpExtender(IBurpExtender):
         
         # Register listeners
         callbacks.registerHttpListener(HttpListener(self))
-        
-        return
-
 
 class HttpListener(IHttpListener):
     def __init__(self, extender):
@@ -411,38 +311,13 @@ class HttpListener(IHttpListener):
         self._helpers = extender._helpers
     
     def processHttpMessage(self, toolFlag, messageIsRequest, messageInfo):
-        if messageIsRequest:
-            self.processRequest(messageInfo)
-        else:
-            self.processResponse(messageInfo)
-    
-    def processRequest(self, messageInfo):
-        requestInfo = self._helpers.analyzeRequest(messageInfo)
-        url = str(requestInfo.getUrl())
-        self._extender._stdout.println("Request: " + url)
-    
-    def processResponse(self, messageInfo):
-        responseInfo = self._helpers.analyzeResponse(messageInfo.getResponse())
-        statusCode = responseInfo.getStatusCode()
-        self._extender._stdout.println("Response: " + str(statusCode))
-
-
-class ScannerCheck(IScannerCheck):
-    def __init__(self, extender):
-        self._extender = extender
-        self._callbacks = extender._callbacks
-        self._helpers = extender._helpers
-    
-    def doPassiveScan(self, baseRequestResponse):
-        # Passive scan logic
-        return None
-    
-    def doActiveScan(self, baseRequestResponse, insertionPoint):
-        # Active scan logic
-        return None
-    
-    def consolidateDuplicateIssues(self, existingIssue, newIssue):
-        return 0
+        try:
+            if messageIsRequest:
+                requestInfo = self._helpers.analyzeRequest(messageInfo)
+                url = str(requestInfo.getUrl())
+                self._extender._stdout.println("Request: " + url)
+        except Exception as e:
+            self._extender._stderr.println("Error: " + str(e))
 ```
 
 ### Load Python Extension
@@ -459,15 +334,17 @@ class ScannerCheck(IScannerCheck):
 
 ### 1. Error Handling
 
+Always wrap your code in try-catch blocks to prevent extension crashes:
+
 **Java:**
 ```java
 @Override
 public ProxyRequestReceivedAction handleRequestReceived(InterceptedRequest interceptedRequest) {
     try {
-        // Process request
+        // Your logic here
         return ProxyRequestReceivedAction.continueWith(interceptedRequest);
     } catch (Exception e) {
-        api.logging().logToError("Error processing request: " + e.getMessage());
+        api.logging().logToError("Error: " + e.getMessage());
         return ProxyRequestReceivedAction.continueWith(interceptedRequest);
     }
 }
@@ -477,95 +354,59 @@ public ProxyRequestReceivedAction handleRequestReceived(InterceptedRequest inter
 ```python
 def processHttpMessage(self, toolFlag, messageIsRequest, messageInfo):
     try:
-        if messageIsRequest:
-            self.processRequest(messageInfo)
+        # Your logic here
     except Exception as e:
         self._extender._stderr.println("Error: " + str(e))
 ```
 
 ### 2. Performance
 
-- **Never block** in HTTP listeners
-- **Use async processing** for heavy operations
-- **Cache results** when possible
-- **Limit scope** - check `isInScope()` before processing
+- **Never block** in HTTP listeners - use async processing
+- **Cache results** for repeated operations
+- **Limit scope** - check `isInScope()` before heavy processing
 
 ### 3. Logging
 
+Use Burp's logging API instead of System.out:
+
 **Java:**
 ```java
-// Use Montoya API logging
 api.logging().logToOutput("Info message");
 api.logging().logToError("Error message");
-api.logging().logToDebug("Debug message");
 ```
 
 **Python:**
 ```python
-# Use PrintWriter
 self._stdout.println("Info message")
 self._stderr.println("Error message")
 ```
 
 ### 4. Scope Checking
 
+Only process in-scope requests to improve performance:
+
 **Java:**
 ```java
 if (api.scope().isInScope(request.url())) {
-    // Process only in-scope requests
+    // Process request
 }
 ```
 
 **Python:**
 ```python
 if self._callbacks.isInScope(requestInfo.getUrl()):
-    # Process only in-scope requests
+    # Process request
 ```
 
 ### 5. Resource Cleanup
 
-**Java:**
-```java
-public class MyExtension implements BurpExtension {
-    private MontoyaApi api;
-    
-    @Override
-    public void initialize(MontoyaApi api) {
-        this.api = api;
-        api.extension().setName("My Extension");
-        
-        // Register unload handler
-        api.extension().registerUnloadHandler(() -> {
-            api.logging().logToOutput("Extension unloading...");
-            // Cleanup resources
-        });
-    }
-}
-```
-
-### 6. Configuration
-
-**Java:**
-```java
-// Use Burp's persistence API
-String configValue = api.persistence().extensionData().getString("config_key", "default_value");
-api.persistence().extensionData().setString("config_key", "new_value");
-```
-
-### 7. Thread Safety
+Register unload handlers to clean up resources:
 
 ```java
-// Use thread-safe collections
-private final ConcurrentHashMap<String, Integer> requestCounts = new ConcurrentHashMap<>();
-
-// Or synchronize access
-private final Object lock = new Object();
-
-public void incrementCount(String url) {
-    synchronized (lock) {
-        // Thread-safe operation
-    }
-}
+api.extension().registerUnloadHandler(() -> {
+    api.logging().logToOutput("Extension unloading...");
+    // Cleanup resources
+});
 ```
 
 ---
@@ -578,7 +419,7 @@ public void incrementCount(String url) {
    ```
    -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005
    ```
-2. IntelliJ: Run → Edit Configurations → Remote JVM Debug
+2. In IntelliJ: Run → Edit Configurations → Remote JVM Debug
 3. Set port to 5005
 4. Start Burp Suite with JVM argument
 5. Attach debugger in IntelliJ
@@ -586,8 +427,7 @@ public void incrementCount(String url) {
 ### Python
 
 - Use `self._stdout.println()` for logging
-- Check **Extensions** → **Output** tab
-- Add `print()` statements (goes to stdout)
+- Check **Extensions** → **Output** tab in Burp Suite
 
 ---
 
@@ -595,26 +435,120 @@ public void incrementCount(String url) {
 
 | Issue | Solution |
 |-------|----------|
-| Extension won't load (Java) | Check Java version (21+ required) |
-| ClassNotFoundException | Verify Montoya API dependency |
-| Python import errors | Check Jython version and path |
-| No HTTP traffic | Ensure listener is registered |
-| Performance issues | Use async processing, limit scope |
+| Extension won't load | Check Java version (21+ required for Montoya API) |
+| ClassNotFoundException | Verify Montoya API dependency in build.gradle |
+| Python import errors | Check Jython version and path configuration |
+| No HTTP traffic | Ensure listener is registered in initialize() |
+| Performance issues | Use async processing, limit scope with isInScope() |
 | OutOfMemoryError | Increase JVM heap size: `-Xmx1g` |
 
 ---
 
-## Resources
+## Limitations
 
-### Java
+- **Java Extensions**: Require JDK 21+ for Montoya API
+- **Python Extensions**: Use Jython (Python 2.7 compatible), not Python 3
+- **Network**: Some features require Burp Suite Professional
+- **Platform**: Extensions run inside Burp Suite JVM
+
+---
+
+## Official Resources
+
+### Documentation
+- [Creating Extensions](https://portswigger.net/burp/documentation/desktop/extend-burp/extensions/creating)
+- [Starter Project](https://portswigger.net/burp/documentation/desktop/extend-burp/extensions/creating/set-up/starter-project)
+- [First Extension Guide](https://portswigger.net/burp/documentation/desktop/extend-burp/extensions/creating/first-extension)
+
+### API References
 - [Montoya API JavaDoc](https://portswigger.github.io/burp-extensions-montoya-api/javadoc/)
 - [Montoya API GitHub](https://github.com/PortSwigger/burp-extensions-montoya-api)
 - [Example Extensions](https://github.com/PortSwigger/burp-extensions-montoya-api-examples)
+- [Legacy Extender API](https://portswigger.net/burp/extender/api/)
 
-### Python
-- [Legacy Extender API JavaDoc](https://portswigger.net/burp/extender/api/)
-- [Jython Download](https://www.jython.org/download)
-
-### General
+### Community
 - [BApp Store](https://portswigger.net/bappstore)
 - [Burp Suite Documentation](https://portswigger.net/burp/documentation)
+
+---
+
+## Examples
+
+### Example 1: Simple Request Logger
+
+Log all HTTP requests passing through Burp Proxy:
+
+```java
+public class RequestLogger implements ProxyRequestHandler {
+    private final MontoyaApi api;
+    
+    public RequestLogger(MontoyaApi api) {
+        this.api = api;
+    }
+    
+    @Override
+    public ProxyRequestReceivedAction handleRequestReceived(InterceptedRequest interceptedRequest) {
+        api.logging().logToOutput("[" + interceptedRequest.httpService().host() + "] " + 
+                                   interceptedRequest.method() + " " + interceptedRequest.url());
+        return ProxyRequestReceivedAction.continueWith(interceptedRequest);
+    }
+    
+    @Override
+    public ProxyRequestToBeSentAction handleRequestToBeSent(InterceptedRequest interceptedRequest) {
+        return ProxyRequestToBeSentAction.continueWith(interceptedRequest);
+    }
+}
+```
+
+### Example 2: Custom Header Check
+
+Detect missing security headers:
+
+```java
+public class SecurityHeaderCheck implements ScanCheck {
+    private final MontoyaApi api;
+    
+    public SecurityHeaderCheck(MontoyaApi api) {
+        this.api = api;
+    }
+    
+    @Override
+    public AuditResult passiveAudit(HttpRequestResponse baseRequestResponse) {
+        HttpResponse response = baseRequestResponse.response();
+        
+        if (response != null) {
+            List<String> headers = response.headers();
+            boolean hasXFrameOptions = headers.stream()
+                .anyMatch(h -> h.toLowerCase().contains("x-frame-options"));
+            
+            if (!hasXFrameOptions) {
+                // Report issue
+            }
+        }
+        
+        return null;
+    }
+    
+    @Override
+    public AuditResult activeAudit(HttpRequestResponse baseRequestResponse, 
+                                    AuditResult auditResult) {
+        return null;
+    }
+}
+```
+
+---
+
+## FAQ
+
+**Q: Which language should I choose?**
+A: Use Java for production extensions (better performance, newer API). Use Python for quick scripts and prototyping.
+
+**Q: Can I use Python 3?**
+A: No, Burp Suite uses Jython which supports Python 2.7 syntax only.
+
+**Q: Do I need Burp Suite Professional?**
+A: Community Edition works for most extensions. Some features (like scanner) require Professional.
+
+**Q: How do I debug my extension?**
+A: Use IntelliJ remote debugging for Java. Use print statements and Burp's Output tab for Python.
